@@ -41,26 +41,26 @@ def kyobo_scrapping(browser, coll_book): #책이름, 사진, 판매가, 리뷰 #
 def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
     from selenium.common.exceptions import NoSuchElementException
     from selenium.webdriver.common.by import By
-    while True :
-        try : 
-            comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
-            for comment_list in comment_lists :
-                comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)').text
-                try :
-                    browser.execute_script('var extra_btn = document.querySelector(\'div.comment_footer > button > span.ico_arw\'); extra_btn.click();')
-                    time.sleep(1)
-                except NoSuchElementException:
-                    pass
-                comment_content = comment_list.find_element(by=By.CSS_SELECTOR, value='div.comment_contents').text
-                coll_book_comment.insert_one({"책ID":book_id
-                                                ,"책 이름" : book_name
-                                                ,"댓글 아이디" :comment_user
-                                                ,"댓글 내용" : comment_content}) 
+    while True : 
+        comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
+        for comment_list in comment_lists :
+            comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)').text
+            try :
+                browser.execute_script('var extra_btn = document.querySelector(\'div.comment_footer > button > span.ico_arw\'); extra_btn.click();')
+                time.sleep(1)
+            except NoSuchElementException:
+                pass
+            comment_content = comment_list.find_element(by=By.CSS_SELECTOR, value='div.comment_contents').text
+            coll_book_comment.insert_one({"책ID":book_id
+                                            ,"책 이름" : book_name
+                                            ,"댓글 아이디" :comment_user
+                                            ,"댓글 내용" : comment_content}) 
             # 리뷰 다음 페이지로 넘어가기(JavaScript 사용)
-            browser.execute_script ('var btn = document.querySelector(\'div.tab_content > div > div.pagination > button.btn_page.next\'); btn.click();')
-            time.sleep(2)
-        except NoSuchElementException:
-            break
+            try :
+                browser.execute_script ('var btn = document.querySelector(\'div.tab_content > div > div.pagination > button.btn_page.next\'); btn.click();')
+                time.sleep(2)
+            except:
+                break
 
 # 브라우저 종료 함수
 def browser_quit(browser):
