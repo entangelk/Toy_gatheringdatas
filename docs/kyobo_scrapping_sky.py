@@ -39,7 +39,6 @@ def kyobo_scrapping(browser, coll_book): #책이름, 사진, 판매가, 리뷰 #
 # 리뷰 정보 스크래핑 함수
 def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
     from selenium.common.exceptions import WebDriverException
-    from selenium.common.exceptions import NoSuchElementException
     from selenium.webdriver.common.by import By
     while True : 
         comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
@@ -64,6 +63,9 @@ def browser_quit(browser):
     browser.quit()
     return 0
     
+
+# 요기 아래에 있는게 main 에 들어가야 하는 방식
+
 import time
 coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
 browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000208779631")
