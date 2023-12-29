@@ -1,9 +1,9 @@
-from importselenium import selenium_running
+# from importselenium import selenium_running
 import time
 from selenium.webdriver.common.by import By
-
-# from kyobo_scrapping_sky import Mongo_connect,kyobo_scrapping,kyobo_comment_scrapping
-
+pass
+from kyobo_scrapping_sky import Mongo_connect,kyobo_scrapping,kyobo_comment_scrapping,connectingwebsite
+pass
 
 
 
@@ -45,9 +45,9 @@ def move_page(browser):
             browser.get(browser.current_url)
 
             # 하늘님 펑션 들어가는 곳
-            # coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
-            # book_id, book_name= kyobo_scrapping(browser, coll_book)
-            # kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
+            coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
+            book_id, book_name= kyobo_scrapping(browser, coll_book)
+            kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
             
             browser.back()  # DB 전송 후 뒤로가기
             time.sleep(3)
@@ -71,8 +71,10 @@ def quitBrowser(browser):
 
 if __name__ == "__main__":
     address = 'https://www.kyobobook.co.kr/'
-    browser = selenium_running(address)
+    browser = connectingwebsite(address)
+    pass
 
 into_screen(browser)
+pass
 move_page(browser)
 
