@@ -5,26 +5,25 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-address = 'https://www.kyobobook.co.kr/'
-browser = selenium_running(address)
 
-def into_screen():  # 상품 리스트 페이지 진입
+
+def into_screen(browser):  # 상품 리스트 페이지 진입
     time.sleep(3)
     element_click = browser.find_element(by=By.CSS_SELECTOR,value='#welcome_header_wrap > div.header_inner > nav > ul.gnb_list > li:nth-child(3) > a')
     element_click.click()
     time.sleep(1)
     return
 
-def count_page():   # 리스트 페이지에 있는 아이템 갯수 카운팅
+def count_page(browser):   # 리스트 페이지에 있는 아이템 갯수 카운팅
     element_bundle = browser.find_elements(by=By.CSS_SELECTOR,value='#tabRoot > div.view_type_list.switch_prod_wrap>ol>li.prod_item')   # 아이템 전체 호출
     item_count = 0  # 카운트 초기화
     for i in element_bundle:
         item_count+=1   # 아이템 갯수만큼 카운팅
     return item_count
 
-def move_page():
+def move_page(browser):
     for j in range(9):  # 10개의 페이지 수집할 예정
-        for i in range(count_page()):   # 1개 페이지에서 아이템 갯수만큼 반복
+        for i in range(count_page(browser)):   # 1개 페이지에서 아이템 갯수만큼 반복
             browser.get(browser.current_url)
             try : 
                 element_click = browser.find_element(by=By.CSS_SELECTOR, value='body > div.burst_banner_wrap > button').click() # 화면을 가리는 하단 베너 닫기
@@ -59,16 +58,16 @@ def move_page():
         pass
     return
 
-def quitBrowser():
+def quitBrowser(browser):
     # 브라우저 종료
     browser.quit()
     return 0
 
 
 if __name__ == "__main__":
-    # find_element().click()
     address = 'https://www.kyobobook.co.kr/'
+    browser = selenium_running(address)
 
-into_screen()
-move_page()
+into_screen(browser)
+move_page(browser)
 
