@@ -1,8 +1,8 @@
-# from importselenium import selenium_running
+from importselenium import selenium_running
 import time
 from selenium.webdriver.common.by import By
 pass
-from kyobo_scrapping_sky import Mongo_connect,kyobo_scrapping,kyobo_comment_scrapping,connectingwebsite
+from kyobo_scrapping_sky import Mongo_connect,kyobo_scrapping,kyobo_comment_scrapping
 pass
 
 
@@ -71,7 +71,7 @@ def quitBrowser(browser):
 
 if __name__ == "__main__":
     address = 'https://www.kyobobook.co.kr/'
-    browser = connectingwebsite(address)
+    browser = selenium_running(address)
     pass
 
 # into_screen(browser)
