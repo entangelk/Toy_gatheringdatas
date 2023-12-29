@@ -6,11 +6,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from kyobo_intopage_yohan import into_screen,count_page,move_page,quitBrowser
+from kyobo_scrapping_sky import connectingwebsite
 
 
 def main(address) :
     try:
-        browser = selenium_running(address)
+        browser = connectingwebsite(address)
         into_screen(browser)
         move_page(browser)
     except:
