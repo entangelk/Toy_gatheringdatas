@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from kyobo_scrapping_sky import Mongo_connect,kyobo_scrapping,kyobo_comment_scrapping
 
 
 def into_screen(browser):  # 상품 리스트 페이지 진입
@@ -41,8 +42,12 @@ def move_page(browser):
                 except:
                     quitBrowser()   # 화면 내 아이템이 없다면 종료
                     pass
+            browser.get(browser.current_url)
 
             # 하늘님 펑션 들어가는 곳
+            coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
+            book_id, book_name= kyobo_scrapping(browser, coll_book)
+            kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
             
             browser.back()  # DB 전송 후 뒤로가기
             time.sleep(3)
