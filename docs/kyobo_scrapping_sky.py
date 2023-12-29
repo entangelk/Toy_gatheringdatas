@@ -69,10 +69,10 @@ def browser_quit(browser):
 
 # 요기 아래에 있는게 main 에 들어가야 하는 방식
 
-import time
-coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
-browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000211654427")
-time.sleep(2)
-book_id, book_name= kyobo_scrapping(browser, coll_book)
-kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
-browser_quit(browser)
+# import time
+# coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
+# browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000211654427")
+# time.sleep(2)
+# book_id, book_name= kyobo_scrapping(browser, coll_book)
+# kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
+# browser_quit(browser)
