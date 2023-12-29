@@ -6,8 +6,6 @@ def Mongo_connect(coll1, coll2) :
     database = mongoclient["gatheringdatas"]
     coll_book = database[coll1]
     coll_book_comment = database[coll2]
-    coll_book.delete_many({})
-    coll_book_comment.delete_many({})
     return coll_book, coll_book_comment
 
 # 사이트 연결 함수 sitename에 사이트 주소 삽입
