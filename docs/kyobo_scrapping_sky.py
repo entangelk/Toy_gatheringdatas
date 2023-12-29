@@ -42,7 +42,7 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
     while True :
         comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
         page_num = browser.find_element(by=By.CSS_SELECTOR, value='#ReviewList1 > div.tab_wrap.type_sm > div.tab_content > div > div.pagination > div > a:nth-child(10)').text
-        for x in range(page_num-1):
+        for x in range(int(page_num)-1):
             for comment_list in comment_lists :
                 comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)').text
                 try :
