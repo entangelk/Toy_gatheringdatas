@@ -33,6 +33,7 @@ def kyobo_scrapping(browser, coll_book): #책이름, 사진, 판매가, 리뷰 #
 def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
     from selenium.common.exceptions import NoSuchElementException
     from selenium.webdriver.common.by import By
+    import time
     while True : 
         comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
         for comment_list in comment_lists :

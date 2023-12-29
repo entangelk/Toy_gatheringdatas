@@ -1,6 +1,6 @@
 from importselenium import selenium_running
-
-from kyobo_intopage_yohan import into_screen,count_page,move_page,quitBrowser
+from kyobo_scrapping_sky import connectingwebsite
+from kyobo_intopage_yohan import into_screen,move_page,quitBrowser
 
 
 def main(address) :
