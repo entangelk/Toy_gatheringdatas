@@ -40,9 +40,9 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
     browser.get(browser.current_url)
     time.sleep(1)
     while True :
-        comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
         page_num = browser.find_element(by=By.CSS_SELECTOR, value='#ReviewList1 > div.tab_wrap.type_sm > div.tab_content > div > div.pagination > div > a:nth-child(10)').text
         for x in range(int(page_num)-1):
+            comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
             for comment_list in comment_lists :
                 comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)').text
                 try :
@@ -58,6 +58,7 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
                 # 리뷰 다음 페이지로 넘어가기(JavaScript 사용)
             browser.execute_script ('var btn = document.querySelector(\'div.tab_content > div > div.pagination > button.btn_page.next\'); btn.click();')
             time.sleep(2)
+        break
 
 
 # 브라우저 종료 함수
