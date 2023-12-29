@@ -1,12 +1,4 @@
 
-if __name__ == "__main__":
-    try :      
-        pass
-    except :
-        pass
-
-
-
 # mongodb 연결 함수. 변수 = 두 개의 collection 이름
 def Mongo_connect(coll1, coll2) :
     from pymongo import MongoClient
@@ -70,10 +62,10 @@ def browser_quit(browser):
 
 # 요기 아래에 있는게 main 에 들어가야 하는 방식
 
-import time
-coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
-browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000208779631")
-time.sleep(2)
-book_id, book_name= kyobo_scrapping(browser, coll_book)
-kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
-browser_quit(browser)
+# import time
+# coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
+# browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000208779631")
+# time.sleep(2)
+# book_id, book_name= kyobo_scrapping(browser, coll_book)
+# kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
+# browser_quit(browser)
