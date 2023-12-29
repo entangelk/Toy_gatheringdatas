@@ -16,10 +16,14 @@ def main(address) :
     except:
         pass    # 업무 코드 문제 발생 시 대처 코드
     finally :
-        quitBrowser(browser)    # try나 except이 끝난 후 무조건 실행 코드
+        quitBrowser(browser=browser)    # try나 except이 끝난 후 무조건 실행 코드
     return 0
 
-if __name__ == "__main__":
+
+
+main('https://www.kyobobook.co.kr/')
+
+'''if __name__ == "__main__":
     try:
         main('https://www.kyobobook.co.kr/')    # 업무 코드
     except:
@@ -29,3 +33,4 @@ if __name__ == "__main__":
         browser = selenium_running(address)
         quitBrowser(browser)
         pass    # try나 except이 끝난 후 무조건 실행 코드
+'''
