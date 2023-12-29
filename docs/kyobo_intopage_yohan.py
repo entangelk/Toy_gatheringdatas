@@ -74,7 +74,7 @@ if __name__ == "__main__":
     browser = connectingwebsite(address)
     pass
 
-into_screen(browser)
-pass
-move_page(browser)
+# into_screen(browser)
+# pass
+# move_page(browser)
 
