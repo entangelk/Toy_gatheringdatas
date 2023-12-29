@@ -52,8 +52,9 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_id):
         except NoSuchElementException :
             break
     
-    
+
 coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
 browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000208779631")
 book_id = kyobo_scrapping(browser, coll_book)
 kyobo_comment_scrapping(browser, coll_book_comment, book_id)
+
