@@ -1,14 +1,7 @@
 
 if __name__ == "__main__":
     try :      
-        from pymongo import MongoClient
-        mongoclient = MongoClient("mongodb://localhost:27017")
-        database = mongoclient["gatheringdatas"]
-        coll_book = database["coll1"]
-        coll_book_comment = database["coll2"]
-        from selenium import webdriver
-        browser = webdriver.Chrome()
-        browser.get("sitename")
+        pass
     except :
         pass
 
@@ -60,5 +53,8 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_id):
             break
     
     
-def run_program():
+<<<<<<< HEAD
     
+=======
+coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
+>>>>>>> f27c639f939bc39bee4550f4650581af585afdf1
