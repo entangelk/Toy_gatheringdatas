@@ -2,7 +2,7 @@
 # mongodb 연결 함수. 변수 = 두 개의 collection 이름
 def Mongo_connect(coll1, coll2) :
     from pymongo import MongoClient
-    mongoclient = MongoClient("mongodb://localhost:27017")
+    mongoclient = MongoClient("mongodb://192.168.10.234:27017")
     database = mongoclient["gatheringdatas"]
     coll_book = database[coll1]
     coll_book_comment = database[coll2]
