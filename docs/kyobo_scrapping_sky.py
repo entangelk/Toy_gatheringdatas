@@ -29,7 +29,7 @@ def connectingwebsite(sitename):
 def kyobo_scrapping(browser, coll_book): #책이름, 사진, 판매가, 리뷰 # coll_book은 책정보 입력하는 collection name
     from selenium.webdriver.common.by import By
     book_name = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_title_box.auto_overflow_wrap > div > div')
-    book_image = browser.find_element(by=By.CSS_SELECTOR, value='div > div.portrait_img_box.portrait > img').attribute('src')
+    book_image = browser.find_element(by=By.CSS_SELECTOR, value='div > div.portrait_img_box.portrait > img').get_attribute('src')
     book_price = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_price_box > div > span.price')
     browser.find_element(by=By.CSS_SELECTOR, value='div.sps_inner > ul > li:nth-child(3) > a').click()
     result = coll_book.insert_one({"책 이름":book_name, "책 사진" : book_image, "가격" : book_price}) #몽고디비에 책 데이터 넣기
@@ -54,3 +54,6 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_id):
     
     
 coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
+browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000208779631")
+book_id = kyobo_scrapping(browser, coll_book)
+kyobo_comment_scrapping(browser, coll_book_comment, book_id)
