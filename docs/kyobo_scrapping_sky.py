@@ -28,33 +28,47 @@ def connectingwebsite(sitename):
 # 책 정보 스크래핑 함수
 def kyobo_scrapping(browser, coll_book): #책이름, 사진, 판매가, 리뷰 # coll_book은 책정보 입력하는 collection name
     from selenium.webdriver.common.by import By
-    book_name = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_title_box.auto_overflow_wrap > div > div')
+    book_name = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_title_box.auto_overflow_wrap > div > div').text
     book_image = browser.find_element(by=By.CSS_SELECTOR, value='div > div.portrait_img_box.portrait > img').get_attribute('src')
-    book_price = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_price_box > div > span.price')
-    browser.find_element(by=By.CSS_SELECTOR, value='div.sps_inner > ul > li:nth-child(3) > a').click()
-    result = coll_book.insert_one({"책 이름":book_name, "책 사진" : book_image, "가격" : book_price}) #몽고디비에 책 데이터 넣기
+    book_price = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_price_box > div > span.price').text
+    book_grade = browser.find_element(by=By.CSS_SELECTOR, value='div.caption > span > span.val').text
+    result = coll_book.insert_one({"책 이름":book_name, "책 사진" : book_image, "가격" : book_price, "사용자 총점" : book_grade}) #몽고디비에 책 데이터 넣기
     book_id = result.inserted_id
-    return book_id
+    return book_id, book_name
 
 # 리뷰 정보 스크래핑 함수
-def kyobo_comment_scrapping(browser, coll_book_comment, book_id):
+def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
+    from selenium.common.exceptions import WebDriverException
     from selenium.common.exceptions import NoSuchElementException
+    from selenium.webdriver.common.by import By
     while True : 
-        try :
-            comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
-            for comment_list in comment_lists :
-                comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)')
-                comment_content = comment_list.find_element(by=By.CSS_SELECTOR, value='div.comment_contents')
-                coll_book_comment.insert_one({"책ID":book_id
-                                              ,"댓글 아이디" :comment_user
-                                              ,"댓글 내용" : comment_content})
-            browser.find_element(by=By.CSS_SELECTOR, value='div.tab_content > div > div.pagination > button.btn_page.next').click()
-        except NoSuchElementException :
-            break
-    
+        comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
+        for comment_list in comment_lists :
+            comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)').text
+            try :
+                browser.execute_script('var extra_btn = document.querySelector(\'div.comment_footer > button > span.ico_arw\'); extra_btn.click();')
+            except WebDriverException:
+                pass
+            comment_content = comment_list.find_element(by=By.CSS_SELECTOR, value='div.comment_contents').text
+            coll_book_comment.insert_one({"책ID":book_id
+                                            ,"책 이름" : book_name
+                                            ,"댓글 아이디" :comment_user
+                                            ,"댓글 내용" : comment_content}) 
 
+        browser.execute_script ('var btn = document.querySelector(\'div.tab_content > div > div.pagination > button.btn_page.next\'); btn.click();')
+        time.sleep(2)
+        if WebDriverException :
+            break
+
+def browser_quit(browser):
+    browser.quit()
+    return 0
+    
+import time
 coll_book, coll_book_comment = Mongo_connect("kyobo_best_book", "kyobo_best_book_comment")
 browser = connectingwebsite("https://product.kyobobook.co.kr/detail/S000208779631")
-book_id = kyobo_scrapping(browser, coll_book)
-kyobo_comment_scrapping(browser, coll_book_comment, book_id)
+time.sleep(2)
+book_id, book_name= kyobo_scrapping(browser, coll_book)
+kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id)
+browser_quit(browser)
 
