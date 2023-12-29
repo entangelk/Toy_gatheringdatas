@@ -2,7 +2,7 @@
 # mongodb 연결 함수. 변수 = 두 개의 collection 이름
 def Mongo_connect(coll1, coll2) :
     from pymongo import MongoClient
-    mongoclient = MongoClient("mongodb://192.168.0.145:27017")
+    mongoclient = MongoClient("mongodb://localhost:27017")
     database = mongoclient["gatheringdatas"]
     coll_book = database[coll1]
     coll_book_comment = database[coll2]
@@ -20,6 +20,9 @@ def connectingwebsite(sitename):
 # 책 정보 스크래핑 함수
 def kyobo_scrapping(browser, coll_book): #책이름, 사진, 판매가, 리뷰 # coll_book은 책정보 입력하는 collection name
     from selenium.webdriver.common.by import By
+    import time
+    browser.get(browser.current_url)
+    time.sleep(1)
     book_name = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_title_box.auto_overflow_wrap > div > div').text # 책 이름
     book_writer = browser.find_element(by=By.CSS_SELECTOR, value='div.prod_author_box.auto_overflow_wrap > div.auto_overflow_contents > div > div').text # 책 저자
     book_image = browser.find_element(by=By.CSS_SELECTOR, value='div > div.portrait_img_box.portrait > img').get_attribute('src') # 책 이미지 링크
@@ -34,7 +37,9 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
     from selenium.common.exceptions import NoSuchElementException
     from selenium.webdriver.common.by import By
     import time
-    while True : 
+    browser.get(browser.current_url)
+    time.sleep(1)
+    while True :
         comment_lists = browser.find_elements(by=By.CSS_SELECTOR, value='div.comment_list > div')
         for comment_list in comment_lists :
             comment_user = comment_list.find_element(by=By.CSS_SELECTOR, value='div.left_area > div > span:nth-child(2)').text
@@ -49,11 +54,11 @@ def kyobo_comment_scrapping(browser, coll_book_comment, book_name, book_id):
                                             ,"댓글 아이디" :comment_user
                                             ,"댓글 내용" : comment_content}) 
             # 리뷰 다음 페이지로 넘어가기(JavaScript 사용)
-            try :
-                browser.execute_script ('var btn = document.querySelector(\'div.tab_content > div > div.pagination > button.btn_page.next\'); btn.click();')
-                time.sleep(2)
-            except:
-                break
+        try :
+            browser.execute_script ('var btn = document.querySelector(\'div.tab_content > div > div.pagination > button.btn_page.next\'); btn.click();')
+            time.sleep(2)
+        except:
+            break
 
 # 브라우저 종료 함수
 def browser_quit(browser):

@@ -1,5 +1,5 @@
 from importselenium import selenium_running
-from kyobo_scrapping_sky import connectingwebsite
+from kyobo_scrapping_sky import Mongo_connect
 from kyobo_intopage_yohan import into_screen,move_page,quitBrowser
 
 
@@ -18,6 +18,7 @@ def main(address) :
 
 # main('https://www.kyobobook.co.kr/')
 
+
 if __name__ == "__main__":
     try:
         address = 'https://www.kyobobook.co.kr/'
@@ -25,8 +26,5 @@ if __name__ == "__main__":
     except:
         pass    # 업무 코드 문제 발생 시 대처 코드
     finally :
-        address = 'https://www.kyobobook.co.kr/'
-        browser = selenium_running(address)
-        quitBrowser(browser)
         pass    # try나 except이 끝난 후 무조건 실행 코드
 
